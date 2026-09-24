@@ -11,13 +11,18 @@
 ## Screenshots
 
 <p>
-  <img src="docs/soar-desktop.png" width="720" alt="The SOAR page: posture tiles, a seven-day incident timeline, the filterable event feed, six response playbooks, recent runs and a runbook per detector">
+  <img src="docs/soar-incidents.png" width="720" alt="Incidents view: warnings grouped by what fired, the day and the source address, each open, acknowledged or resolved; the detail shows the resolve note, the events, that day's playbook runs and a Ban-this-IP button">
 </p>
 <p>
-  <img src="docs/soar-phone.png" height="480" alt="The SOAR page on a phone: the verdict and posture tiles first">
+  <img src="docs/soar-live.png" width="720" alt="Live logs view: SSH, fail2ban, firewall and web lines streaming newest-first with source filters, search, warnings-only, click-an-IP and pause">
+</p>
+<p>
+  <img src="docs/soar-desktop.png" width="400" alt="Overview: posture tiles, a seven-day incident timeline, the filterable event feed, six response playbooks, recent runs and a runbook per detector">
+  &nbsp;&nbsp;
+  <img src="docs/soar-phone.png" height="480" alt="The console on a phone: the verdict and posture tiles first">
 </p>
 
-*The response console in demo mode. Every IP address, email and event on it is synthetic (IPs come from the RFC 5737 documentation ranges). The live page reads the same shapes from the production event store.*
+*The console in its synthetic demo mode: Incidents, Live logs, then the Overview and the phone layout. Every IP address, email and event is synthetic (RFC 5737 documentation ranges). The live page reads the same shapes from the production event store.*
 
 ## What it protects
 
@@ -39,6 +44,8 @@ flowchart LR
   A -- audit events --> I
   W --> I
   I --> E[(Event store<br/>= the SIEM)]
+  D -->|raw log lines, every minute| L[(Log store<br/>14 days)]
+  L --> P
   E --> T[Telegram page<br/>warning and above]
   E --> P[SOAR page]
   P -- playbook --> Q[Command queue]
@@ -60,6 +67,9 @@ flowchart LR
 Both APIs write an audit trail as well: signups, logins, throttled password guessing, bad webhook signatures, a wrong engine secret, a credential presented and refused, every use of a dashboard control.
 
 **3. The SIEM.** Every event lands in one append-only store: the same D1 table the [Unified Ops Dashboard](https://github.com/kenmwara/unified-ops-dashboard) reads. Warning and above also pages the operator on Telegram. One store means one timeline: a login, the control it touched and the trade that followed sit on the same axis.
+
+- **Live logs.** Every minute the server ships the lines that matter: SSH attempts, fail2ban bans, firewall blocks rolled up per source address, web errors and writes with the visitor's real address and country, the detector's findings and every playbook run. They are kept 14 days, and the console tails them every four seconds with source filters, search, a warnings-only switch, click-an-address and pause. With key-only SSH, an attack never shows up as a failed password. It shows as an invalid user, or as a closed pre-auth session against a real account, so the parser reads those.
+- **Incidents.** Warnings are grouped by what fired, the day and the first routable source address. An incident stays open until the operator acknowledges or resolves it, a resolve needs a written note, and it reopens by itself if the same thing fires again. The detail shows its events, that day's playbook runs and every log line from that address, with a button to ban it. The console's first line says how many incidents need you; "Nothing needs you" is a state it has to earn.
 
 **4. Response.** The SOAR page shows the verdict first, then posture (kill switch, detector freshness, SSH pressure, fail2ban, backup, the morning health check), the incident timeline, the event feed, and six playbooks:
 
@@ -88,6 +98,8 @@ The dangerous ones need a typed confirmation word. The page can only queue a pla
 - **A worker-to-worker call failed silently.** One Cloudflare Worker cannot fetch another's default hostname; the request simply never arrived. Audit events now travel over a service binding.
 - **The first red-team run reported five breaches that were all a deploy restarting.** A 502 says nothing about whether an attack works, so the harness now retries through a restart before judging.
 - **The console had a second front door.** Access guarded the custom domain, but the hosting platform also served the page on its own default hostname, which Access never sees. No data leaked (every API call needs a token), but the fix was an edge redirect plus a red-team probe that failed before the fix and passes after it.
+- **A reboot looked like an intrusion.** The detector ran mid-shutdown, saw the web server's ports closed, dropped them from its baseline, and paged "new listening port" three times when they came back. Known ports now stay known, and the deploy gate replays a reboot and fails on the old logic.
+- **The web logs saw the wrong visitor.** nginx only ever sees Cloudflare's edge, so every web line carried a Cloudflare address. The application already receives the real one in a header, so it now writes the security-relevant requests itself, with the real address and country.
 - **A confirmation dialog could hang.** The browser's dialog `close` event was deferred while the page was hidden, so a confirmation could wait forever. The console now resolves on the form's own submit and cancel events.
 
 ## The record so far
