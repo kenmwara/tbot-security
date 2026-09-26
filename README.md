@@ -1,6 +1,6 @@
 # T BOT Security Operations
 
-> Detection, a SIEM and a response console for a live-money trading system, built and run by one engineer.
+> Detection, a SIEM and a response console for a live-money trading system that nobody watches at 3 AM.
 
 🌐 **Live:** ops.tbot.trade/soar *(behind Cloudflare Access, operator only; the screenshots below use the page's synthetic demo mode)*
 🏗️ **Stack:** Python · Cloudflare Workers (TypeScript) · D1 · Pages · Access · GitHub Actions · nginx · UFW · fail2ban
