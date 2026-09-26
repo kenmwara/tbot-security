@@ -26,7 +26,7 @@
 
 ## What it protects
 
-[T BOT](https://github.com/kenmwara/tbot) trades real money on Kalshi prediction markets, around the clock, with nobody watching. Three things face the internet: the operator dashboard that holds the kill switch, a subscriber API that stores encrypted exchange keys, and the backend of the mobile app. A breach of any of them is a financial event, so security is treated as part of the trading system rather than something beside it.
+[T BOT](https://github.com/kenmwara/tbot) trades real money on prediction markets, around the clock, with nobody watching. Three things face the internet: the operator dashboard that holds the kill switch, a subscriber API that stores encrypted exchange keys, and the backend of the mobile app. A breach of any of them is a financial event, so security is treated as part of the trading system rather than something beside it.
 
 ## The four layers
 
