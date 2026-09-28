@@ -11,6 +11,12 @@
 ## Screenshots
 
 <p>
+  <img src="docs/soar-map.png" width="720" alt="Attack map: a world map shaded by how much traffic the server refused from each country in 24 hours, beside a top-12 list with the SSH, firewall, web and fail2ban split and the top network per country">
+</p>
+
+*The attack map (added 28 Sep 2026) shows **real** counts: 24 hours of traffic the server refused, by country. Only countries, counts and network owners appear; no address does. Countries come from an offline IP table on the server, so no visitor address is ever sent to a lookup service. Clicking a country opens its raw log lines.*
+
+<p>
   <img src="docs/soar-incidents.png" width="720" alt="Incidents view: warnings grouped by what fired, the day and the source address, each open, acknowledged or resolved; the detail shows the resolve note, the events, that day's playbook runs and a Ban-this-IP button">
 </p>
 <p>
@@ -101,6 +107,7 @@ The dangerous ones need a typed confirmation word. The page can only queue a pla
 - **A reboot looked like an intrusion.** The detector ran mid-shutdown, saw the web server's ports closed, dropped them from its baseline, and paged "new listening port" three times when they came back. Known ports now stay known, and the deploy gate replays a reboot and fails on the old logic.
 - **The web logs saw the wrong visitor.** nginx only ever sees Cloudflare's edge, so every web line carried a Cloudflare address. The application already receives the real one in a header, so it now writes the security-relevant requests itself, with the real address and country.
 - **Closing root SSH also closed the provider's web console.** The hosting provider's browser console turned out to be SSH underneath: its agent writes a temporary key into the account's key file and connects from the provider's relays. With root refused, the console failed, and its key write set off a critical file-integrity alert. Nobody got in, and the logs showed both the refused logins and the agent's own key writes. The fix was a named admin account plus a non-SSH recovery console as break-glass, and the lesson is to map every path that depends on a control before switching it off.
+- **The loudest attacker on the map's first day was our own red team.** 318 of the day's refused requests came from the nightly self-attack harness, and "hostile" was the wrong word for search crawlers collecting 404s. The map now leaves out our own addresses and the red team and says "refused or blocked", so every number is traffic the server actually turned away. Its query is cached, because a view that recounted the log on every refresh had already taken the event store to its daily read limit once.
 - **A confirmation dialog could hang.** The browser's dialog `close` event was deferred while the page was hidden, so a confirmation could wait forever. The console now resolves on the form's own submit and cancel events.
 
 ## The record so far
