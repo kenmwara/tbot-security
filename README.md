@@ -32,7 +32,7 @@
 
 ## What it protects
 
-[T BOT](https://github.com/kenmwara/tbot) trades real money on prediction markets, around the clock, with nobody watching. Three things face the internet: the operator dashboard that holds the kill switch, a subscriber API that stores encrypted exchange keys, and the backend of the mobile app. A breach of any of them is a financial event, so security is treated as part of the trading system rather than something beside it.
+[T BOT](https://github.com/kenmwara/tbot) trades real money on its own, around the clock, with nobody watching. Three things face the internet: the operator dashboard that holds the kill switch, a subscriber API that stores encrypted exchange keys, and the backend of the mobile app. A breach of any of them is a financial event, so security is treated as part of the trading system rather than something beside it.
 
 ## The four layers
 
@@ -67,7 +67,7 @@ flowchart LR
 - a brute-force storm (a heads-up, since key-only auth holds);
 - a change to any file security depends on: keys, users, sudoers, SSH, firewall, web server, scheduled jobs, environment files (root-owned files are hashed by a separate root job);
 - a new listening port;
-- **contracts filled on the exchange that the bot never logged.** This reconciles the exchange's own record against the trade log. If someone else is using the API key, the numbers stop matching, and the kill switch engages automatically;
+- **orders filled on the exchange that the bot never logged.** This reconciles the exchange's own record against the trade log. If someone else is using the API key, the numbers stop matching, and the kill switch engages automatically;
 - money leaving, or trying to leave, the exchange account.
 
 Both APIs write an audit trail as well: signups, logins, throttled password guessing, bad webhook signatures, a wrong engine secret, a credential presented and refused, every use of a dashboard control.
