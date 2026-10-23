@@ -1,3 +1,5 @@
+<!-- banner --><a href="https://github.com/kenmwara"><img src="https://raw.githubusercontent.com/kenmwara/kenmwara/main/assets/brand/card-tbot-security.png?v=162c3a50" width="100%" alt="T BOT Security Ops: Intrusion detection, a SIEM and a SOAR console with playbooks, guarding a live-money trading system. LIVE guarding production."></a>
+
 # T BOT Security Operations
 
 > Detection, a SIEM and a response console for a live-money trading system that nobody watches at 3 AM.
