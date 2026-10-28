@@ -38,28 +38,8 @@
 
 ## The four layers
 
-```mermaid
-flowchart LR
-  subgraph Sources
-    D[Trading server<br/>SSH · files · ports]
-    K[Exchange account<br/>fills · withdrawals]
-    S[Subscriber API]
-    A[App backend]
-  end
-  D --> W[Detector<br/>every few minutes]
-  K --> W
-  S -- audit events --> I[Ingest worker]
-  A -- audit events --> I
-  W --> I
-  I --> E[(Event store<br/>= the SIEM)]
-  D -->|raw log lines, every minute| L[(Log store<br/>14 days)]
-  L --> P
-  E --> T[Telegram page<br/>warning and above]
-  E --> P[SOAR page]
-  P -- playbook --> Q[Command queue]
-  Q -- polled each minute --> D
-  D -- result + live posture --> P
-```
+
+<img src="images/architecture.png" width="100%" alt="Architecture diagram of T BOT's security operations in four layers. Prevention: the server answers only Cloudflare (firewall plus origin certificate), SSH is key-only behind fail2ban with no root login, the console sits behind Cloudflare Access, secrets move by file pipe and backups are AES-256 encrypted with a nightly proven restore. Detection: the exchange's record is reconciled against the trade log, and unlogged fills engage the kill switch automatically; the server is checked every few minutes for unknown keys, password logins, brute force, file changes, new ports and money leaving; both APIs write audit trails. The SIEM: one append-only Cloudflare D1 event store shared with the Unified Ops Dashboard, live logs kept 14 days, incidents grouped by what fired, day and address, warnings paging Telegram. Response: the SOAR page queues one of six fixed playbooks, which the server re-validates and runs within about a minute. Kept honest by a nightly red team from GitHub Actions, the deploy gate and a morning health check.">
 
 **1. Prevention.** The trading server answers only Cloudflare: the firewall admits web traffic from Cloudflare's published ranges alone, and the web server demands Cloudflare's origin-pull client certificate, so going around the proxy to the server's address gets no answer. SSH is key-only behind fail2ban, and root cannot log in over it at all: administration goes through a named account whose every privileged command is logged into the SIEM. The operator console sits behind Cloudflare Access, and a small edge function sends the hosting platform's own default hostname back to the protected domain. The response tooling runs as an unprivileged user whose sudo rights cover exactly one command. Secrets move through a file pipe and never reach a terminal, a log or git. A nightly AES-256 encrypted backup lands in a private repository, and its restore is proven every night rather than assumed.
 
