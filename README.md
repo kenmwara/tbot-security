@@ -53,6 +53,10 @@ Both APIs write an audit trail as well: signups, logins, throttled password gues
 
 **4. Response.** The SOAR page shows the verdict first, then posture (kill switch, detector freshness, SSH pressure, fail2ban, backup, the morning health check), the incident timeline, the event feed, and six playbooks:
 
+<img src="images/tsec-playbooks.png" width="100%" alt="Six ready-made responses, picked from a fixed list. The risky ones need a typed confirmation word. The server checks each request again before it runs it, and every run is written to the security log, usually within a minute. Halt trading: Switches trading off: no new trades open, and trades already open can still close. Resume trading: Switches it back on, once the cause is understood. Freeze evidence: Seals the login, firewall and web logs, the detectors' state and the books into one bundle, and takes an encrypted backup. Sign out the dashboard: Ends every operator session. Sign out subscribers: Ends every subscriber session, on every device. Ban an address: Blocks one internet address from logging in to the server.">
+
+<details><summary>The six responses as a table</summary>
+
 | Playbook | What it does |
 |---|---|
 | Halt trading | Engages the kill switch: no new orders open, exits still run |
@@ -61,6 +65,8 @@ Both APIs write an audit trail as well: signups, logins, throttled password gues
 | Revoke dashboard sessions | Signs every operator session out |
 | Revoke subscriber sessions | Signs every subscriber out on every device |
 | Ban an IP | Adds one address to fail2ban's SSH jail |
+
+</details>
 
 The dangerous ones need a typed confirmation word. The page can only queue a playbook from a fixed list; the queue validates it, the server re-validates it (a ban takes exactly one IP address, parsed as one), runs it, and writes the result back to the page, usually within a minute. Every run is itself an event in the SIEM.
 
