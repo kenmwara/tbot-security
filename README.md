@@ -1,4 +1,4 @@
-<!-- banner --><a href="https://github.com/kenmwara"><img src="https://raw.githubusercontent.com/kenmwara/kenmwara/main/assets/brand/card-tbot-security.png?v=5a19e9bb" width="100%" alt="T BOT Security Ops: Intrusion detection, a SIEM and a SOAR console with playbooks, guarding a live-money trading system. LIVE guarding production."></a>
+<!-- banner --><a href="https://github.com/kenmwara"><img src="https://raw.githubusercontent.com/kenmwara/kenmwara/main/assets/brand/card-tbot-security.png?v=0c9b1e87" width="100%" alt="T BOT Security Ops: Intrusion detection, a SIEM and a SOAR console with playbooks, guarding a live-money trading system. LIVE guarding production."></a>
 
 # T BOT Security Operations
 
@@ -9,6 +9,8 @@
 🔒 **Source:** private. This README and the screenshots are the showcase.
 
 ---
+
+<img src="images/flow.png" width="100%" alt="Flow diagram in five steps. 1: Traffic arrives; The firewall admits Cloudflare only; the origin requires its certificate. 2: Detection runs; Exchange vs trade log, SSH keys, file integrity, new ports, money leaving. 3: Events land in the SIEM; One append-only event store on Cloudflare D1; logs kept 14 days. 4: Incidents are grouped; By rule, day and source address; warning and above page Telegram. 5: A playbook responds; Queued from the SOAR console, re-validated on the server, result logged. Guards: Key misuse, unlogged fills stop trading automatically; One timeline, security, money and controls in one store; Response, a fixed list of six playbooks, checked twice.">
 
 ## Screenshots
 
