@@ -18,25 +18,11 @@
 
 ## Screenshots
 
-<p>
-  <img src="docs/soar-map.png" width="720" alt="Attack map: a world map shaded by how much traffic the server refused from each country in 24 hours, beside a top-12 list with the SSH, firewall, web and fail2ban split and the top network per country">
-</p>
+<img src="images/tsec-map.png" width="100%" alt="Where the blocked traffic came from, country by country, over 24 hours. Real counts of traffic the server turned away. Only countries, counts and network owners appear, never an address. Countries are looked up on the server itself, so no visitor's address is sent anywhere.">
 
-*The attack map (added 28 Sep 2026) shows **real** counts: 24 hours of traffic the server refused, by country. Only countries, counts and network owners appear; no address does. Countries come from an offline IP table on the server, so no visitor address is ever sent to a lookup service. Clicking a country opens its raw log lines.*
+*Clicking a country on the live map opens its raw log lines.*
 
-<p>
-  <img src="docs/soar-incidents.png" width="720" alt="Incidents view: warnings grouped by what fired, the day and the source address, each open, acknowledged or resolved; the detail shows the resolve note, the events, that day's playbook runs and a Ban-this-IP button">
-</p>
-<p>
-  <img src="docs/soar-live.png" width="720" alt="Live logs view: SSH, fail2ban, firewall and web lines streaming newest-first with source filters, search, warnings-only, click-an-IP and pause">
-</p>
-<p>
-  <img src="docs/soar-desktop.png" width="400" alt="Overview: posture tiles, a seven-day incident timeline, the filterable event feed, six response playbooks, recent runs and a runbook per detector">
-  &nbsp;&nbsp;
-  <img src="docs/soar-phone.png" height="480" alt="The console on a phone: the verdict and posture tiles first">
-</p>
-
-*The console in its synthetic demo mode: Incidents, Live logs, then the Overview and the phone layout. Every IP address, email and event is synthetic (RFC 5737 documentation ranges). The live page reads the same shapes from the production event store.*
+<img src="images/tsec-console.png" width="100%" alt="The response console, shown with made-up demo data. Every address, email and event here is invented, from ranges reserved for examples. The live page shows the same views with real data, behind a sign-in. Incidents: Related warnings grouped into one incident: open, acknowledged or resolved, with a button to ban an address. Live logs: Login, firewall and web logs streaming in, newest first, with filters and search. Overview: Health tiles, a seven-day timeline, the event feed and six ready-made responses. On a phone: The verdict and health tiles come first.">
 
 ## What it protects
 
