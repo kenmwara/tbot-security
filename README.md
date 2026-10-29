@@ -1,4 +1,4 @@
-<!-- banner --><a href="https://github.com/kenmwara"><img src="https://raw.githubusercontent.com/kenmwara/kenmwara/main/assets/brand/card-tbot-security.png?v=0c9b1e87" width="100%" alt="T BOT Security Ops: Intrusion detection, a SIEM and a SOAR console with playbooks, guarding a live-money trading system. LIVE guarding production."></a>
+<!-- banner --><a href="https://github.com/kenmwara"><img src="https://raw.githubusercontent.com/kenmwara/kenmwara/main/assets/brand/card-tbot-security.png?v=0c9b1e871f" width="100%" alt="T BOT Security Ops: Intrusion detection, a SIEM and a SOAR console with playbooks, guarding a live-money trading system. LIVE guarding production."></a>
 
 # T BOT Security Operations
 
