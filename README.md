@@ -12,13 +12,7 @@
 
 ## Key takeaways
 
-| | |
-|---|---|
-| **0** | **Logins by anyone but the operator** since the September 2026 rebuild, against thousands of automated SSH attempts. |
-| **< 30 s** | **Playbook drill, end to end on the live system:** queued from the console, re-validated and run on the server, result back on the page. |
-| **6** | **Fixed response playbooks.** The console can only queue from the list; the dangerous ones need a typed confirmation word. |
-| **14 days** | **Of live logs in one append-only store**, shared with the operations dashboard as the SIEM. |
-| **1** | **Automatic stop on key misuse.** A fill the bot never logged engages the kill switch. |
+<img src="images/scorecard.png" width="100%" alt="Key takeaways. Detection and response for a system nobody watches at 3 AM. 0: Logins by anyone but the operator. Since the September 2026 rebuild, against thousands of automated SSH attempts. <30 s: Playbook drill, end to end. Queued from the console, re-validated and run on the server, result back on the page. 6: Fixed response playbooks. The console can only queue from the list; dangerous ones need a typed confirmation. 14 days: Of live logs, one store. Append-only, shared with the operations dashboard as the SIEM. 1: Automatic stop on key misuse. A fill the bot never logged engages the kill switch.">
 
 <img src="images/flow.png" width="100%" alt="Flow diagram in five steps. 1: Traffic arrives; The firewall admits Cloudflare only; the origin requires its certificate. 2: Detection runs; Exchange vs trade log, SSH keys, file integrity, new ports, money leaving. 3: Events land in the SIEM; One append-only event store on Cloudflare D1; logs kept 14 days. 4: Incidents are grouped; By rule, day and source address; warning and above page Telegram. 5: A playbook responds; Queued from the SOAR console, re-validated on the server, result logged. Guards: Key misuse, unlogged fills stop trading automatically; One timeline, security, money and controls in one store; Response, a fixed list of six playbooks, checked twice.">
 
